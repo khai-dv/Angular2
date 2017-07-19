@@ -1,0 +1,55 @@
+<!-- new syntax for ng-if -->
+<section *ngIf="person">
+  <section>
+    <h2>You selected: {{person.name}}</h2>
+    <h3>Description</h3>
+    <p>
+      {{person.name}} weights {{person.weight}} and is {{person.height}} tall.
+    </p>
+  </section>
+  <section>
+    <form (ngSubmit)="savePersonDetails()" #personForm="ngForm">
+        <table>
+            <tr style="height:30px">
+                <td><label for="name">Name: </label></td>
+                <td><input type="text" name="name" required [(ngModel)]="person.name" #name="ngModel"></td>
+                <td>
+                    <div [hidden]="!name.invalid" class="error">
+                        Name is required. Input please!
+                    </div>
+                    <!--div [hidden]="name.valid || name.pristine" class="error">
+                        Name is required my good sir/lady!
+                    </div-->
+                </td>
+            </tr>   
+            <tr style="height:30px">
+                <td><label for="weight">Weight: </label></td>
+                <td><input type="number" name="weight" required [(ngModel)]="person.weight" #weight="ngModel"></td>
+                <td>
+                    <div [hidden]="!weight.invalid" class="error">
+                        Weight is required. Input please!
+                    </div>
+                    <div [hidden]="weight.invalid || !(weight.value>200)" class="error">
+                        Input please weight <= 200!
+                    </div>
+                </td>
+            </tr>
+            <tr style="height:30px">
+                <td><label for="height">Height: </label></td>
+                <td><input type="number" name="height" required [(ngModel)]="person.height" #height="ngModel"></td>
+                <td>
+                    <div [hidden]="!height.invalid" class="error">
+                        Height is required. Input please!
+                    </div>
+                    <div [hidden]="height.invalid || !(height.value<100)" class="error">
+                        Input please height >= 100!
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <button type="submit" [disabled]="!personForm.form.valid">Save</button>
+    </form>
+  </section>
+  <br>
+  <button (click)="gotoPeoplesList()">Back to peoples list</button>
+</section>
